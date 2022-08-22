@@ -1,4 +1,7 @@
 logs/
 results/
 config/read_scores.txt
+config/*.fasta
 .snakemake/
+slurm*
+

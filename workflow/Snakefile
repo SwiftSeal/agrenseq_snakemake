@@ -13,7 +13,10 @@ def get_samples(wildcards):
 include: "rules/jellyfish.smk"
 include: "rules/accessions.smk"
 include: "rules/matrix.smk"
+include: "rules/phenotype.smk"
+include: "rules/nlr_parser.smk"
+include: "rules/run_association.smk"
 
 rule all:
 	input:
-		"results/output_matrix.txt"
+		"results/AgRenSeqResult.txt"
