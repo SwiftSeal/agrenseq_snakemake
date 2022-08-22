@@ -11,7 +11,9 @@ def get_samples(wildcards):
 	return read_scores["sample"][wildcards.sample]
 
 include: "rules/jellyfish.smk"
+include: "rules/accessions.smk"
+include: "rules/matrix.smk"
 
 rule all:
 	input:
-		expand("results/jellyfish/{sample}.dump", sample = read_scores["sample"])
+		"results/output_matrix.txt"
