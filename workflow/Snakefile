@@ -10,24 +10,8 @@ def get_reads(wildcards):
 def get_samples(wildcards):
 	return read_scores["sample"][wildcards.sample]
 
+include: "rules/jellyfish.smk"
+
 rule all:
 	input:
-		expand("results/jellyfish/{sample}.jf", sample = read_scores["sample"])
-
-rule jellyfish:
-	input:
-		get_reads
-	output:
-		jf="results/jellyfish/{sample}.jf"
-	log:
-		"logs/jellyfish/{sample}.log"
-	threads:
-		4
-	resources:
-		mem_mb=16000,
-		partition="short"
-	conda:
-		"envs/jellyfish.yaml"
-	shell:
-		"""(zcat {input} | jellyfish count /dev/fd/0 -C -m 51 -s 1G -t 4 -o {output.jf}) > {log}"""
-
+		expand("results/jellyfish/{sample}.dump", sample = read_scores["sample"])
