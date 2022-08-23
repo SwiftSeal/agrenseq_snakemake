@@ -1,14 +1,4 @@
 channels:
-  - conda-forge
   - bioconda
-  - defaults
-  - r
 dependencies:
-  - _libgcc_mutex=0.1=conda_forge
-  - _openmp_mutex=4.5=2_gnu
-  - jellyfish=2.2.10=h6bb024c_1
-  - jemalloc=4.5.0=0
-  - libgcc=7.2.0=h69d50b8_2
-  - libgcc-ng=12.1.0=h8d9b700_16
-  - libgomp=12.1.0=h8d9b700_16
-  - libstdcxx-ng=12.1.0=ha89aaad_16
+  - jellyfish=2.2.10

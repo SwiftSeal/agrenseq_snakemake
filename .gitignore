@@ -1,5 +1,6 @@
 logs/
 results/
+images/
 config/read_scores.txt
 config/*.fasta
 .snakemake/

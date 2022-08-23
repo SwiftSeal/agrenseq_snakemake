@@ -16,7 +16,8 @@ include: "rules/matrix.smk"
 include: "rules/phenotype.smk"
 include: "rules/nlr_parser.smk"
 include: "rules/run_association.smk"
+include: "rules/plot.smk"
 
 rule all:
 	input:
-		"results/AgRenSeqResult.txt"
+		"images/AgRenSeq_plot.png"
