@@ -18,7 +18,7 @@ Other dependencies are handled via Snakemake.
 ## Usage
 
 All inputs and parameters are handled in the config/ directory.
-config.yaml currently takes two options, `read_scores` which contains the relative path of `read_scores.txt` to the base directory, and `assembly which contains the relative path to the `.fasta` file of contigs you wish to use as a reference.
+config.yaml currently takes two options, `read_scores` which contains the relative path of `read_scores.txt` to the base directory, and `assembly` which contains the relative path to the `.fasta` file of contigs you wish to use as a reference.
 
 `read_scores.txt` is a tab separated file with four columns, `sample R1 R2 score`.
 Each row contains the name, *absolute path* to illumina .fastq.gz R1, R2, and phenotype score for each accession passed into the AgRenSeq pipeline.
@@ -26,7 +26,7 @@ This pipeline assumes reads have been trimmed and quality filtered. (will fix th
 
 Certain parameters specific to the crop diversity HPC SLURM system are hardcoded in the snakemake rules, these may need to be adjusted.
 
-To run the full pipeline:
+To run the full pipeline, run the following in the base directory:
 
 `snakemake --use-conda --profile /path/to/your/cluster/profile --jobs max_number_of_simultaneous_jobs`
 
@@ -34,6 +34,6 @@ the `--profile` should be created via cookiecutter with default options.
 
 Results are contained with two directories, `images/` and `results/`.
 In results, `AgRenSeqResult.txt` is the final output of AgRenSeq, `output.nlr.txt` is a list of contigs associated with nlr motifs, and `jellyfish/` cotains the `.dump` files for each accession in `read_scores.txt`.
-`images/` will contain a basic plot of the AgRenSeq results`.
+`images/` will contain a basic plot of the AgRenSeq results.
 
 A `logs/` directory will be created and populated with logs of certain processes.
