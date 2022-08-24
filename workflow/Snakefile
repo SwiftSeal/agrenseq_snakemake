@@ -17,7 +17,12 @@ include: "rules/phenotype.smk"
 include: "rules/nlr_parser.smk"
 include: "rules/run_association.smk"
 include: "rules/plot.smk"
+include: "rules/fastp.smk"
+include: "rules/blast.smk"
+include: "rules/blast_plot.smk"
 
 rule all:
 	input:
-		"images/AgRenSeq_plot.png"
+		"images/AgRenSeq_plot.png",
+		"results/blast.txt",
+		"images/blast_plot.png"
