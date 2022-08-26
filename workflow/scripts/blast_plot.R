@@ -4,6 +4,7 @@ library(ggplot2)
 args = commandArgs(trailingOnly = TRUE)
 
 sizes <- read.table(args[1], sep = "\t") # chromosome sizes
+filtered <- read.table(args[3], sep = "\t")
 
 bins = data.frame(chromosome=character(), x=integer()) # initialise bins
 
@@ -17,9 +18,16 @@ for(row in 1:nrow(sizes)){
   blast <- blast %>% mutate(bin = cut(V9, breaks = x, labels = FALSE)) # Create col 'bin' with bin ints
   x = data.frame(x) # turn bin vect into df?!?!
   x$n = 0 # initialise bin vals
+  x$filtered = 0
   x$chromosome = sizes$V1[row] # give this chromsome a name
+  index = 1
   for(i in blast$bin) {
     x[i, "n"] = x[i, "n"] + 1 # iterate through blast, enumerate n by bin int instance
+
+    if(blast$V1[index] %in% filtered$V1) {
+      x[i, "filtered"] = x[i, "filtered"] + 1
+    }
+    index = index + 1
   } 
   bins = rbind(bins, x) # slap x on the end of growing df
   rm(x) # tidy up for next loop
@@ -29,9 +37,13 @@ for(row in 1:nrow(sizes)){
 
 bins$x = bins$x/1000000
 
-p <- ggplot(bins, aes(x = x, y = n, col = chromosome)) +
+bins["filtered"][bins["filtered"] == 0] <- NA
+
+p <- ggplot(bins, aes(x = x, y = n, group = chromosome)) +
   facet_grid(~chromosome, scales = "free_x", space = "free_x") +
-  geom_ribbon(aes(ymin = 0, ymax = n, fill = chromosome)) +
+  geom_ribbon(aes(ymin = 0, ymax = n, fill = chromosome), alpha = 0.5) +
+  geom_point(aes(x = x, y = filtered, colour = chromosome)) +
+  labs(title = args[4]) +
   theme(panel.grid.minor = element_line(colour="white"),
         panel.grid.major = element_line(colour="white"),
         panel.background = element_rect(fill="white"),
@@ -45,4 +57,4 @@ p <- ggplot(bins, aes(x = x, y = n, col = chromosome)) +
   scale_y_continuous(paste("R genes per", binsize/1000, "kb"), expand = c(0,0)) +
   scale_x_continuous(name="Physical location (Mb)")
 
-ggsave(args[3], p, units="cm", width = 36, height = 12)
+ggsave(args[5], p, units="cm", width = 36, height = 12)

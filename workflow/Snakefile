@@ -5,10 +5,10 @@ configfile: "config/config.yaml"
 read_scores = pd.read_table(config["read_scores"], header=0).set_index(["sample"], drop=False)
 
 def get_reads(wildcards):
-	return [read_scores["R1"][wildcards.sample], read_scores["R2"][wildcards.sample]]
+    return [read_scores["R1"][wildcards.sample], read_scores["R2"][wildcards.sample]]
 
 def get_samples(wildcards):
-	return read_scores["sample"][wildcards.sample]
+    return read_scores["sample"][wildcards.sample]
 
 include: "rules/jellyfish.smk"
 include: "rules/accessions.smk"
@@ -22,7 +22,6 @@ include: "rules/blast.smk"
 include: "rules/blast_plot.smk"
 
 rule all:
-	input:
-		"images/AgRenSeq_plot.png",
-		"results/blast.txt",
-		"images/blast_plot.png"
+    input:
+        "results/filtered_contigs.txt",
+        "images/blast_plot.png"
